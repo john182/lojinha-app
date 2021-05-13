@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "45567147784",
+    "project_id": "loja-virtual-da7bb",
+    "storage_bucket": "loja-virtual-da7bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:45567147784:android:dd550a490b71ae75bff6bd",
+        "android_client_info": {
+          "package_name": "br.com.chronos.loja_virtual"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "45567147784-35qo0di0c7p680c04ba21bh8e36pale3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2g6CWObO0KLNhCKn4uHXdHtTypPQxf6Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "45567147784-35qo0di0c7p680c04ba21bh8e36pale3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
