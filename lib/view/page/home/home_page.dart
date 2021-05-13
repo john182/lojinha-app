@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/view/page/home/home_page_controller.dart';
-import 'package:loja_virtual/view/page/home/widget/section_list_widget.dart';
-import 'package:loja_virtual/view/page/home/widget/section_staggered_widget.dart';
 import 'package:loja_virtual/view/shared/menu/menu.dart';
 import 'package:provider/provider.dart';
 
@@ -33,12 +31,12 @@ class HomePage extends StatelessWidget {
                 builder: (_, controller, __) {
                   final List<Widget> children =
                       controller.sections.map<Widget>((section) {
-                    //   return Container();
-                    if (section.type == 'List') {
-                      return SectionListWidget(section: section);
-                    }
-
-                    return SectionStaggeredWidget(section);
+                    return Container();
+                    // if (section.type == 'List') {
+                    //   return SectionListWidget(section: section);
+                    // }
+                    //
+                    // return SectionStaggeredWidget(section);
                   }).toList();
 
                   return SliverList(
