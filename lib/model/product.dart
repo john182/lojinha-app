@@ -3,14 +3,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'item_size.dart';
 
 class Product {
-  String id;
+  String? id;
   String name;
   String description;
   List<String> images;
+  List<dynamic>? newImages;
   List<ItemSize> sizes;
 
   Product(
-      {required this.id,
+      {this.id,
       required this.name,
       required this.description,
       required this.images,
@@ -26,6 +27,30 @@ class Product {
             .map((s) => ItemSize.fromMap(s as Map<String, dynamic>))
             .toList());
   }
+
+  List<Map<String, dynamic>> exportSizeList() {
+    return sizes.map((size) => size.toMap()).toList();
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'description': description,
+      'sizes': exportSizeList(),
+    };
+  }
+
+  Product clone() {
+    return Product(
+      id: id,
+      name: name,
+      description: description,
+      images: List.from(images),
+      sizes: sizes.map((size) => size.clone()).toList(),
+    );
+  }
+
+  bool get hasNew => id == null;
 
   int get totalStock {
     int stock = 0;

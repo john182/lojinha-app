@@ -5,6 +5,7 @@ import 'package:loja_virtual/view/page/home/home_page_controller.dart';
 import 'package:loja_virtual/view/page/users/users_page_controller.dart';
 import 'package:loja_virtual/view/viewModel/cart_view_model.dart';
 import 'package:loja_virtual/view/viewModel/login_view_model.dart';
+import 'package:loja_virtual/view/viewModel/product_view_model.dart';
 import 'package:loja_virtual/view/viewModel/products_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
           create: (_) => LoginViewModel(),
           lazy: false,
         ),
+        ChangeNotifierProvider(create: (_) => ProductViewModel()),
         ChangeNotifierProvider(
           create: (_) => ProductsViewModel(),
           lazy: false,
@@ -46,7 +48,7 @@ class MyApp extends StatelessWidget {
           lazy: false,
           update: (_, loginController, usersController) =>
               usersController!..updateUser(loginController.adminEnabled),
-        )
+        ),
       ],
       child: MaterialApp(
         title: 'Loja',

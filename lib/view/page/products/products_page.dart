@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:loja_virtual/model/product.dart';
 import 'package:loja_virtual/view/shared/menu/menu.dart';
+import 'package:loja_virtual/view/viewModel/login_view_model.dart';
 import 'package:loja_virtual/view/viewModel/products_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -53,6 +55,22 @@ class ProductsPage extends StatelessWidget {
                     viewModel.search = '';
                   },
                 );
+              }
+            },
+          ),
+          Consumer<LoginViewModel>(
+            builder: (_, userControll, __) {
+              if (userControll.adminEnabled) {
+                return IconButton(
+                  icon: const Icon(Icons.add),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/edit_product',
+                        arguments: Product(
+                            name: '', description: '', images: [], sizes: []));
+                  },
+                );
+              } else {
+                return Container();
               }
             },
           )

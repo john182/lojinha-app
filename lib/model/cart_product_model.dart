@@ -20,7 +20,7 @@ class CartProductModel {
 
   factory CartProductModel.fromProduct(Product prod, String size) {
     return CartProductModel(
-      productId: prod.id,
+      productId: prod.id!,
       quantity: 1,
       size: size,
       product: prod,

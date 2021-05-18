@@ -3,11 +3,30 @@ class ItemSize {
   num price;
   int stock;
 
-  ItemSize(this.name, this.price, this.stock);
+  ItemSize({required this.name, required this.price, required this.stock});
 
   factory ItemSize.fromMap(Map<String, dynamic> map) {
     return ItemSize(
-        map['name'] as String, map['price'] as num, map['stock'] as int);
+      name: map['name'] as String,
+      price: map['price'] as num,
+      stock: map['stock'] as int,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'price': price,
+      'stock': stock,
+    };
+  }
+
+  ItemSize clone() {
+    return ItemSize(
+      name: name,
+      price: price,
+      stock: stock,
+    );
   }
 
   bool get hasStock => stock > 0;

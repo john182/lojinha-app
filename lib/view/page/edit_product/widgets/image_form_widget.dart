@@ -20,6 +20,7 @@ class ImagesFormWidget extends StatelessWidget {
       validator: (images) {
         return images!.isEmpty ? 'Insira ao menos uma imagem' : null;
       },
+      onSaved: (images) => product.newImages = images,
       builder: (state) {
         void onImageSelected(File file) {
           state.value?.add(file);

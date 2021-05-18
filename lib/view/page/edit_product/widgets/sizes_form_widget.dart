@@ -12,7 +12,7 @@ class SizesFormWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormField<List<ItemSize>>(
-      initialValue: List.from(product.sizes),
+      initialValue: product.sizes,
       validator: (sizes) {
         if (sizes!.isEmpty) {
           return 'Insira um tamanho';
@@ -34,7 +34,11 @@ class SizesFormWidget extends StatelessWidget {
                   iconData: Icons.add,
                   color: Colors.black,
                   onTap: () {
-                    state.value!.add(ItemSize("", 0, 0));
+                    state.value!.add(ItemSize(
+                      name: "",
+                      price: 0,
+                      stock: 0,
+                    ));
                     state.didChange(state.value);
                   },
                 )
