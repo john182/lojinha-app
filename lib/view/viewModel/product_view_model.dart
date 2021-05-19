@@ -18,7 +18,17 @@ class ProductViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _loading = false;
+
+  bool get loading => _loading;
+
+  set loading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
+
   Future<void> save(Product product) async {
+    loading = true;
     if (product.id == null) {
       final doc = await _service.add(product.toMap());
       product.id = doc.id;
@@ -41,18 +51,20 @@ class ProductViewModel extends ChangeNotifier {
       }
     }
 
-    // for(final image in product.images){
-    //   if(!(product.newImages??[]).contains(image)){
-    //     try {
-    //       final ref = await storage.getReferenceFromUrl(image);
-    //       await ref.delete();
-    //     } catch (e){
-    //       debugPrint('Falha ao deletar $image');
-    //     }
-    //   }
-    // }
+    for (final image in product.images) {
+      if (!(product.newImages ?? []).contains(image)) {
+        try {
+          await _service.removerFile(image);
+        } catch (e) {
+          debugPrint('Falha ao deletar $image');
+        }
+      }
+    }
 
     await _service.updateImages(updateImages);
+
+    product.images = updateImages;
+    loading = false;
   }
 
   Color getColorBorder(BuildContext context, ItemSize itemSize) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loja_virtual/model/product.dart';
 import 'package:loja_virtual/view/page/edit_product/widgets/image_form_widget.dart';
 import 'package:loja_virtual/view/page/edit_product/widgets/sizes_form_widget.dart';
+import 'package:loja_virtual/view/shared/widgets/button_loading_widget.dart';
 import 'package:loja_virtual/view/viewModel/product_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +16,7 @@ class EditProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
-    var viwModel = Provider.of<ProductViewModel>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(product.hasNew ? 'Criar Anúncio' : 'Editar Anúncio'),
@@ -85,18 +86,21 @@ class EditProduct extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  SizedBox(
-                    height: 40,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          formKey.currentState!.save();
-                          viwModel.save(product);
-                        }
-                      },
-                      child: const Text('Salvar'),
-                    ),
-                  ),
+                  Consumer<ProductViewModel>(
+                    builder: (_, viewModel, __) {
+                      return ButtonLoadingWidget(
+                        label: "Salvar",
+                        loading: viewModel.loading,
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            formKey.currentState!.save();
+                            viewModel.save(product);
+                            Navigator.of(context).pop();
+                          }
+                        },
+                      );
+                    },
+                  )
                 ],
               ),
             )
