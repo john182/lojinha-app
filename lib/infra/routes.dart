@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/model/product.dart';
+import 'package:loja_virtual/view/page/adress/address_page.dart';
 import 'package:loja_virtual/view/page/cart/cart_page.dart';
 import 'package:loja_virtual/view/page/edit_product/edit_product_page.dart';
 import 'package:loja_virtual/view/page/product/product_page.dart';
@@ -18,6 +19,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => SingIn());
       case '/cart':
         return MaterialPageRoute(builder: (_) => CartPage());
+      case '/address':
+        return MaterialPageRoute(builder: (_) => const AdrressPage());
       case '/product':
         return MaterialPageRoute(
             builder: (_) => ProductPage(settings.arguments! as Product));

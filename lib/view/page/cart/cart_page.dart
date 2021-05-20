@@ -34,7 +34,9 @@ class CartPage extends StatelessWidget {
               PriceCardWidget(
                 buttonText: 'Continuar para Entrega',
                 onPressed: viewModel.isCartValid && viewModel.items.isNotEmpty
-                    ? () {}
+                    ? () {
+                        Navigator.of(context).pushNamed('/address');
+                      }
                     : null,
               ),
             ],
