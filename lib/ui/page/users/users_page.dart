@@ -1,7 +1,7 @@
 import 'package:alphabet_list_scroll_view/alphabet_list_scroll_view.dart';
 import 'package:flutter/material.dart';
+import 'package:loja_virtual/ui/shared/widgets/menu/menu_widget.dart';
 import 'package:loja_virtual/ui/viewModel/users_view_model.dart';
-import 'package:loja_virtual/ui/shared/menu/menu_widget.dart';
 import 'package:provider/provider.dart';
 
 class UsersPage extends StatelessWidget {

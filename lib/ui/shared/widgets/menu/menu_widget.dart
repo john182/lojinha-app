@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:loja_virtual/ui/shared/menu/menu_header_widget.dart';
 import 'package:loja_virtual/ui/viewModel/login_view_model.dart';
 import 'package:provider/provider.dart';
 
+import 'menu_header_widget.dart';
 import 'menu_item_widget.dart';
 
 class MenuWidget extends StatelessWidget {

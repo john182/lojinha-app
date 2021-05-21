@@ -5,7 +5,7 @@ import 'package:loja_virtual/ui/viewModel/login_view_model.dart';
 import 'package:loja_virtual/ui/viewModel/product_view_model.dart';
 import 'package:provider/provider.dart';
 
-import 'components/size_widget.dart';
+import 'widgets/size_widget.dart';
 
 class ProductPage extends StatelessWidget {
   const ProductPage(this.product);

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:loja_virtual/ui/shared/menu/menu_widget.dart';
+import 'package:loja_virtual/ui/shared/widgets/menu/menu_widget.dart';
 import 'package:loja_virtual/ui/viewModel/home_view_model.dart';
 import 'package:provider/provider.dart';
 
