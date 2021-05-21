@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/model/product.dart';
-import 'package:loja_virtual/view/page/adress/address_page.dart';
-import 'package:loja_virtual/view/page/cart/cart_page.dart';
-import 'package:loja_virtual/view/page/edit_product/edit_product_page.dart';
-import 'package:loja_virtual/view/page/product/product_page.dart';
-import 'package:loja_virtual/view/page/singin_page.dart';
-import 'package:loja_virtual/view/page/singup_page.dart';
-import 'package:loja_virtual/view/shared/base_screen.dart';
+import 'package:loja_virtual/ui/page/adress/address_page.dart';
+import 'package:loja_virtual/ui/page/cart/cart_page.dart';
+import 'package:loja_virtual/ui/page/edit_product/edit_product_page.dart';
+import 'package:loja_virtual/ui/page/product/product_page.dart';
+import 'package:loja_virtual/ui/page/singin_page.dart';
+import 'package:loja_virtual/ui/page/singup_page.dart';
+import 'package:loja_virtual/ui/shared/base_screen.dart';
 
 class Routes {
   static Route<dynamic> definerRoute(RouteSettings settings) {

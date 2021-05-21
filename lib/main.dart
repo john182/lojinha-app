@@ -1,12 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/infra/routes.dart';
-import 'package:loja_virtual/view/page/home/home_page_controller.dart';
-import 'package:loja_virtual/view/page/users/users_page_controller.dart';
-import 'package:loja_virtual/view/viewModel/cart_view_model.dart';
-import 'package:loja_virtual/view/viewModel/login_view_model.dart';
-import 'package:loja_virtual/view/viewModel/product_view_model.dart';
-import 'package:loja_virtual/view/viewModel/products_view_model.dart';
+import 'package:loja_virtual/ui/page/home/home_page_controller.dart';
+import 'package:loja_virtual/ui/page/users/users_page_controller.dart';
+import 'package:loja_virtual/ui/viewModel/cart_view_model.dart';
+import 'package:loja_virtual/ui/viewModel/login_view_model.dart';
+import 'package:loja_virtual/ui/viewModel/product_view_model.dart';
+import 'package:loja_virtual/ui/viewModel/products_view_model.dart';
 import 'package:provider/provider.dart';
 
 import 'infra/locator.dart';
