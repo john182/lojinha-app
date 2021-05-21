@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:loja_virtual/data/models/address.dart';
 import 'package:loja_virtual/infra/locator.dart';
 import 'package:loja_virtual/model/cart_product_model.dart';
 import 'package:loja_virtual/model/product.dart';
 import 'package:loja_virtual/model/user.dart';
+import 'package:loja_virtual/service/cep_aberto_service.dart';
 import 'package:loja_virtual/service/product_service.dart';
 import 'package:loja_virtual/service/user_service.dart';
 
@@ -11,6 +13,7 @@ class CartViewModel extends ChangeNotifier {
   List<CartProductModel> items = [];
   User? user;
   num productsPrice = 0.0;
+  Address? address;
 
   final UserService _service = locator<UserService>();
   final ProductService _serviceProduct = locator<ProductService>();
@@ -73,6 +76,33 @@ class CartViewModel extends ChangeNotifier {
 
   void updatePrice() {
     calcAmount();
+    notifyListeners();
+  }
+
+  Future<void> getAddress(String cep) async {
+    final cepAbertoService = CepAbertoService();
+
+    try {
+      final result = await cepAbertoService.getAddressFromCep(cep);
+
+      address = Address(
+          street: result.logradouro,
+          district: result.bairro,
+          zipCode: result.cep,
+          city: result.cidade.nome,
+          state: result.estado.sigla,
+          lat: result.latitude,
+          long: result.longitude,
+          complement: '',
+          number: '');
+      notifyListeners();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  void removeAddress() {
+    address = null;
     notifyListeners();
   }
 
