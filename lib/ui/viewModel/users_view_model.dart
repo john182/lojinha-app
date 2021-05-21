@@ -4,7 +4,7 @@ import 'package:loja_virtual/infra/locator.dart';
 import 'package:loja_virtual/model/user.dart';
 import 'package:loja_virtual/service/user_service.dart';
 
-class UsersPageController extends ChangeNotifier {
+class UsersViewModel extends ChangeNotifier {
   List<User> users = [];
   List<String> names = [];
 

@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:loja_virtual/ui/shared/widgets/icon_button_widget.dart';
 import 'package:provider/provider.dart';
 
-import 'cart_item_widget_controller.dart';
+import '../../../viewModel/cart_item_view_modell.dart';
 
 class CartItemWidget extends StatelessWidget {
-  final CartItemWidgetController controller;
+  final CartItemViewModel viewModel;
 
-  const CartItemWidget(this.controller);
+  const CartItemWidget(this.viewModel);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
-      value: controller,
+      value: viewModel,
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         child: Padding(
@@ -23,7 +23,7 @@ class CartItemWidget extends StatelessWidget {
                 height: 80,
                 width: 80,
                 child:
-                    Image.network(controller.item.product?.images.first ?? ""),
+                    Image.network(viewModel.item.product?.images.first ?? ""),
               ),
               Expanded(
                 child: Padding(
@@ -31,7 +31,7 @@ class CartItemWidget extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       Text(
-                        controller.item.product?.name ?? "",
+                        viewModel.item.product?.name ?? "",
                         style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 17.0,
@@ -40,15 +40,15 @@ class CartItemWidget extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         child: Text(
-                          'Tamanho: ${controller.item.size}',
+                          'Tamanho: ${viewModel.item.size}',
                           style: const TextStyle(fontWeight: FontWeight.w300),
                         ),
                       ),
-                      Consumer<CartItemWidgetController>(
+                      Consumer<CartItemViewModel>(
                         builder: (_, cartProduct, __) {
                           if (cartProduct.item.hasStock) {
                             return Text(
-                                'R\$ ${controller.item.unitPrice.toStringAsFixed(2)}',
+                                'R\$ ${viewModel.item.unitPrice.toStringAsFixed(2)}',
                                 style: TextStyle(
                                   color: Theme.of(context).primaryColor,
                                   fontSize: 16.0,
@@ -69,7 +69,7 @@ class CartItemWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              Consumer<CartItemWidgetController>(builder: (_, controller, ___) {
+              Consumer<CartItemViewModel>(builder: (_, controller, ___) {
                 return Column(
                   children: [
                     IconButtonWidget(

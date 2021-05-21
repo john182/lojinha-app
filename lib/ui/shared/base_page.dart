@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:loja_virtual/ui/page/home/home_page.dart';
 import 'package:loja_virtual/ui/page/products/products_page.dart';
 import 'package:loja_virtual/ui/page/users/users_page.dart';
-import 'package:loja_virtual/ui/shared/menu/menu.dart';
+import 'package:loja_virtual/ui/shared/menu/menu_widget.dart';
 import 'package:loja_virtual/ui/viewModel/login_view_model.dart';
-import 'package:loja_virtual/ui/viewModel/page_manager.dart';
+import 'package:loja_virtual/ui/viewModel/page_view_model.dart';
 import 'package:provider/provider.dart';
 
-class BaseScreen extends StatelessWidget {
+class BasePage extends StatelessWidget {
   final PageController pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
     return Provider(
-        create: (_) => PageManage(pageController),
+        create: (_) => PageViewModel(pageController),
         child: Consumer<LoginViewModel>(
           builder: (_, userManager, __) {
             return PageView(
@@ -23,13 +23,13 @@ class BaseScreen extends StatelessWidget {
                 HomePage(),
                 ProductsPage(),
                 Scaffold(
-                  drawer: Menu(),
+                  drawer: MenuWidget(),
                   appBar: AppBar(
                     title: const Text('Home3'),
                   ),
                 ),
                 Scaffold(
-                  drawer: Menu(),
+                  drawer: MenuWidget(),
                   appBar: AppBar(
                     title: const Text('Home4'),
                   ),
@@ -37,7 +37,7 @@ class BaseScreen extends StatelessWidget {
                 if (userManager.adminEnabled) ...[
                   UsersPage(),
                   Scaffold(
-                    drawer: Menu(),
+                    drawer: MenuWidget(),
                     appBar: AppBar(
                       title: const Text('Pedidos'),
                     ),

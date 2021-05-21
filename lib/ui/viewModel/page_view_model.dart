@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class PageManage {
-  PageManage(this._pageController);
+class PageViewModel {
+  PageViewModel(this._pageController);
 
   final PageController _pageController;
   int page = 0;

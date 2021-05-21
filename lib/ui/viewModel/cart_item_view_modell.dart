@@ -3,14 +3,14 @@ import 'package:loja_virtual/infra/locator.dart';
 import 'package:loja_virtual/model/cart_product_model.dart';
 import 'package:loja_virtual/service/user_service.dart';
 
-class CartItemWidgetController extends ChangeNotifier {
+class CartItemViewModel extends ChangeNotifier {
   CartProductModel item;
   final Function onUpdateQuantity;
   final Function onRemove;
 
   final UserService _service = locator<UserService>();
 
-  CartItemWidgetController(
+  CartItemViewModel(
       {required this.item,
       required this.onRemove,
       required this.onUpdateQuantity});

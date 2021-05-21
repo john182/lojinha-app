@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/model/product.dart';
 
-class ProductsItem extends StatelessWidget {
-  const ProductsItem(this.product);
+class ProductsItemWidget extends StatelessWidget {
+  const ProductsItemWidget(this.product);
 
   final Product product;
 

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/model/product.dart';
-import 'package:loja_virtual/ui/shared/menu/menu.dart';
+import 'package:loja_virtual/ui/page/products/widgets/search_dialog_widget.dart';
+import 'package:loja_virtual/ui/shared/menu/menu_widget.dart';
 import 'package:loja_virtual/ui/viewModel/login_view_model.dart';
 import 'package:loja_virtual/ui/viewModel/products_view_model.dart';
 import 'package:provider/provider.dart';
 
-import 'components/producsts_item.dart';
-import 'components/search_dialog.dart';
+import 'widgets/producsts_item_widget.dart';
 
 class ProductsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Menu(),
+      drawer: MenuWidget(),
       appBar: AppBar(
         title: Consumer<ProductsViewModel>(
           builder: (_, viewModel, __) {
@@ -83,7 +83,7 @@ class ProductsPage extends StatelessWidget {
               padding: const EdgeInsets.all(4),
               itemCount: filteredProducts.length,
               itemBuilder: (_, index) {
-                return ProductsItem(filteredProducts[index]);
+                return ProductsItemWidget(filteredProducts[index]);
               });
         },
       ),
@@ -100,7 +100,7 @@ class ProductsPage extends StatelessWidget {
 
   Future<void> search(BuildContext context, ProductsViewModel viewModel) async {
     final search = await showDialog<String>(
-        context: context, builder: (_) => SearchDialog(viewModel.search));
+        context: context, builder: (_) => SearchDialogWidget(viewModel.search));
     if (search != null) {
       viewModel.search = search;
     }

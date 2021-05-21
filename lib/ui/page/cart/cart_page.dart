@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/model/cart_product_model.dart';
 import 'package:loja_virtual/ui/page/cart/widgets/cart_item_widget.dart';
-import 'package:loja_virtual/ui/page/cart/widgets/cart_item_widget_controller.dart';
 import 'package:loja_virtual/ui/shared/widgets/price_cart_widget.dart';
+import 'package:loja_virtual/ui/viewModel/cart_item_view_modell.dart';
 import 'package:loja_virtual/ui/viewModel/cart_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -21,14 +21,14 @@ class CartPage extends StatelessWidget {
               Column(
                 children: viewModel.items
                     .map((cartProduct) =>
-                        CartItemWidget(CartItemWidgetController(
-                            item: cartProduct,
-                            onRemove: (item) {
-                              viewModel.removeOfCart(item as CartProductModel);
-                            },
-                            onUpdateQuantity: () {
-                              viewModel.updatePrice();
-                            })))
+                    CartItemWidget(CartItemViewModel(
+                        item: cartProduct,
+                        onRemove: (item) {
+                          viewModel.removeOfCart(item as CartProductModel);
+                        },
+                        onUpdateQuantity: () {
+                          viewModel.updatePrice();
+                        })))
                     .toList(),
               ),
               PriceCardWidget(

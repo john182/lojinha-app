@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:loja_virtual/ui/viewModel/page_manager.dart';
+import 'package:loja_virtual/ui/viewModel/page_view_model.dart';
 import 'package:provider/provider.dart';
 
-class MenuItem extends StatelessWidget {
+class MenuItemWidget extends StatelessWidget {
   final IconData iconData;
   final String title;
   final int page;
 
-  const MenuItem(
+  const MenuItemWidget(
       {Key? key,
       required this.iconData,
       required this.title,
@@ -16,14 +16,14 @@ class MenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int currentPage = context.watch<PageManage>().page;
+    final int currentPage = context.watch<PageViewModel>().page;
 
     final Color? color =
         currentPage == page ? Colors.green[700] : Colors.grey[700];
 
     return InkWell(
       onTap: () {
-        context.read<PageManage>().setPage(page);
+        context.read<PageViewModel>().setPage(page);
       },
       child: SizedBox(
           height: 60,

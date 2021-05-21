@@ -3,10 +3,10 @@ import 'package:loja_virtual/infra/locator.dart';
 import 'package:loja_virtual/model/section_model.dart';
 import 'package:loja_virtual/service/home_service.dart';
 
-class HomePageController extends ChangeNotifier {
+class HomeViewModel extends ChangeNotifier {
   List<SectionModel> sections = [];
 
-  HomePageController() {
+  HomeViewModel() {
     _loadSections();
   }
 

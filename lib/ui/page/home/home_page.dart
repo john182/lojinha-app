@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:loja_virtual/ui/page/home/home_page_controller.dart';
-import 'package:loja_virtual/ui/shared/menu/menu.dart';
+import 'package:loja_virtual/ui/shared/menu/menu_widget.dart';
+import 'package:loja_virtual/ui/viewModel/home_view_model.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Menu(),
+      drawer: MenuWidget(),
       body: Stack(
         children: <Widget>[
           CustomScrollView(
@@ -27,10 +27,10 @@ class HomePage extends StatelessWidget {
                   ),
                 ],
               ),
-              Consumer<HomePageController>(
-                builder: (_, controller, __) {
+              Consumer<HomeViewModel>(
+                builder: (_, viewModel, __) {
                   final List<Widget> children =
-                      controller.sections.map<Widget>((section) {
+                      viewModel.sections.map<Widget>((section) {
                     return Container();
                     // if (section.type == 'List') {
                     //   return SectionListWidget(section: section);

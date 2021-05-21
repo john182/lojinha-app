@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SearchDialog extends StatelessWidget {
-  const SearchDialog(this.initialText);
+class SearchDialogWidget extends StatelessWidget {
+  const SearchDialogWidget(this.initialText);
 
   final String initialText;
 

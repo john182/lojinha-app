@@ -6,13 +6,13 @@ import 'package:loja_virtual/ui/page/edit_product/edit_product_page.dart';
 import 'package:loja_virtual/ui/page/product/product_page.dart';
 import 'package:loja_virtual/ui/page/singin_page.dart';
 import 'package:loja_virtual/ui/page/singup_page.dart';
-import 'package:loja_virtual/ui/shared/base_screen.dart';
+import 'package:loja_virtual/ui/shared/base_page.dart';
 
 class Routes {
   static Route<dynamic> definerRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => BaseScreen());
+        return MaterialPageRoute(builder: (_) => BasePage());
       case '/singup':
         return MaterialPageRoute(builder: (_) => SingUp());
       case '/singin':
@@ -28,7 +28,7 @@ class Routes {
         return MaterialPageRoute(
             builder: (_) => EditProduct(settings.arguments! as Product));
       default:
-        return MaterialPageRoute(builder: (_) => BaseScreen());
+        return MaterialPageRoute(builder: (_) => BasePage());
     }
   }
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/ui/viewModel/login_view_model.dart';
-import 'package:loja_virtual/ui/viewModel/page_manager.dart';
+import 'package:loja_virtual/ui/viewModel/page_view_model.dart';
 import 'package:provider/provider.dart';
 
-class MenuHeader extends StatelessWidget {
+class MenuHeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,7 +34,7 @@ class MenuHeader extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   if (viewModel.isLoggedIn) {
-                    context.read<PageManage>().setPage(0);
+                    context.read<PageViewModel>().setPage(0);
                     viewModel.signOut();
                   } else {
                     Navigator.of(context).pushNamed('/singin');
