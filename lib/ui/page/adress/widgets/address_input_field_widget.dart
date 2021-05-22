@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:loja_virtual/data/models/address.dart';
 import 'package:loja_virtual/infra/validators.dart';
+import 'package:loja_virtual/ui/shared/widgets/button_loading_widget.dart';
 import 'package:loja_virtual/ui/viewModel/address_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -117,15 +118,29 @@ class AddressInputFieldWidget extends StatelessWidget {
         const SizedBox(
           height: 8,
         ),
-        ElevatedButton(
-          onPressed: () {
-            if (Form.of(context)!.validate()) {
-              Form.of(context)!.save();
-              context.read<AddressViewModel>().setAddress(address!);
-            }
-          },
-          child: const Text('Calcular Frete'),
-        ),
+        Consumer<AddressViewModel>(builder: (_, viewModel, __) {
+          return ButtonLoadingWidget(
+            label: 'Calcular Frete',
+            loading: viewModel.isCalculateCoordinates,
+            onPressed: () async {
+              if (Form.of(context)!.validate()) {
+                Form.of(context)!.save();
+                viewModel.setAddress(address!);
+                await viewModel.calculateDelivery(
+                  address!.lat,
+                  address!.long,
+                  (msg) => {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(msg),
+                      backgroundColor: Colors.red,
+                    ))
+                  },
+                  () {},
+                );
+              }
+            },
+          );
+        }),
       ],
     );
   }

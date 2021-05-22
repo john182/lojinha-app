@@ -9,6 +9,17 @@ class AddressViewModel extends ChangeNotifier {
   Address? address;
   final AddressService _service = locator<AddressService>();
 
+  num productsPrice = 0.0;
+  num deliveryPrice = 0;
+
+  bool _calculateCoordinates = false;
+
+  bool get isCalculateCoordinates => _calculateCoordinates;
+
+  set isCalculateCoordinates(bool value) {
+    _calculateCoordinates = value;
+  }
+
   Future<void> getAddress(String cep) async {
     final cepAbertoService = CepAbertoService();
 
@@ -31,10 +42,8 @@ class AddressViewModel extends ChangeNotifier {
     }
   }
 
-  void setAddress(Address address) {
-    this.address = address;
-
-    calculateDelivery(address.lat, address.long);
+  void setAddress(Address newAddress) {
+    this.address = newAddress;
   }
 
   void removeAddress() {
@@ -42,19 +51,32 @@ class AddressViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> calculateDelivery(double lat, double long) async {
+  Future<void> calculateDelivery(double lat, double long,
+      Function(String msg) onFail, Function? onSuccess) async {
+    isCalculateCoordinates = true;
     final doc = await _service.getCoordinates();
 
     final latStore = doc.get('lat') as double;
     final longStore = doc.get('long') as double;
-
     final maxkm = doc.get('maxkm') as num;
+    final base = doc.get('base') as num;
+    final km = doc.get('km') as num;
 
-    double dis =
-        await Geolocator().distanceBetween(latStore, longStore, lat, long);
+    double dis = Geolocator.distanceBetween(latStore, longStore, lat, long);
 
     dis /= 1000.0;
 
     print('Distance $dis');
+    isCalculateCoordinates = false;
+
+    if (dis > maxkm) {
+      onFail("Endereço fora do raio de entrega");
+      notifyListeners();
+      return;
+    }
+
+    deliveryPrice = base + dis * km;
+
+    notifyListeners();
   }
 }
