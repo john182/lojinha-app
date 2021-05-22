@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:loja_virtual/data/models/address.dart';
 import 'package:loja_virtual/infra/validators.dart';
+import 'package:loja_virtual/ui/viewModel/address_view_model.dart';
+import 'package:provider/provider.dart';
 
 class AddressInputFieldWidget extends StatelessWidget {
   final Address? address;
@@ -116,7 +118,12 @@ class AddressInputFieldWidget extends StatelessWidget {
           height: 8,
         ),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            if (Form.of(context)!.validate()) {
+              Form.of(context)!.save();
+              context.read<AddressViewModel>().setAddress(address!);
+            }
+          },
           child: const Text('Calcular Frete'),
         ),
       ],
