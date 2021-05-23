@@ -3,24 +3,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:loja_virtual/ui/shared/widgets/button_loading_widget.dart';
 import 'package:loja_virtual/ui/viewModel/address_view_model.dart';
+import 'package:loja_virtual/ui/viewModel/users_view_model.dart';
 import 'package:provider/provider.dart';
 
 class CepInputFieldWidget extends StatelessWidget {
   final String? cep;
 
-  final TextEditingController cepController = TextEditingController();
+  final TextEditingController cepController;
 
-  CepInputFieldWidget({Key? key, this.cep}) : super(key: key);
+  CepInputFieldWidget({Key? key, this.cep})
+      : cepController = TextEditingController(text: cep),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final userViewModel = context.watch<UsersViewModel>();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         TextFormField(
           controller: cepController,
           decoration: const InputDecoration(
-              isDense: true, labelText: 'CEP', hintText: '12.345-678'),
+            isDense: true,
+            labelText: 'CEP',
+            hintText: '12.345-678',
+          ),
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp("[0-9]")),
             CepInputFormatter(),
@@ -41,7 +49,8 @@ class CepInputFieldWidget extends StatelessWidget {
               loading: viewModel.loadingCep,
               onPressed: () {
                 if (Form.of(context)!.validate()) {
-                  viewModel.getAddress(cepController.text);
+                  viewModel.getAddress(
+                      cepController.text, (msg) => showMessage(msg, context));
                 }
               },
               label: 'Buscar CEP',
@@ -50,5 +59,12 @@ class CepInputFieldWidget extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void showMessage(String msg, BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(msg),
+      backgroundColor: Colors.red,
+    ));
   }
 }

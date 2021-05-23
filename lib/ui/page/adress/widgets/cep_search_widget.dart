@@ -10,13 +10,15 @@ class CepSearchWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AddressViewModel>(builder: (_, viewModel, __) {
-      return viewModel.address == null
-          ? CepInputFieldWidget()
-          : CepLabelInfoWidget(
-              cep: viewModel.address!.zipCode,
-              onTap: () => viewModel.removeAddress(),
-            );
-    });
+    return Consumer<AddressViewModel>(
+      builder: (_, viewModel, __) {
+        return viewModel.address == null
+            ? CepInputFieldWidget(cep: viewModel.zipCode)
+            : CepLabelInfoWidget(
+                cep: viewModel.address!.zipCode,
+                onTap: () => viewModel.removeAddress(),
+              );
+      },
+    );
   }
 }

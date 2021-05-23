@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:loja_virtual/data/models/address.dart';
+import 'package:loja_virtual/model/address.dart';
 
 class AddressLabelInfoWidget extends StatelessWidget {
   final Address address;

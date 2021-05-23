@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:loja_virtual/data/models/address.dart';
 import 'package:loja_virtual/infra/locator.dart';
+import 'package:loja_virtual/model/address.dart';
 import 'package:loja_virtual/service/adddress_service.dart';
 import 'package:loja_virtual/service/cep_aberto_service.dart';
 
 class AddressViewModel extends ChangeNotifier {
   Address? address;
+  String? zipCode;
   final AddressService _service = locator<AddressService>();
 
   num productsPrice = 0.0;
@@ -35,8 +36,9 @@ class AddressViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getAddress(String cep) async {
+  Future<void> getAddress(String cep, Function(String msg) onFail) async {
     loadingCep = true;
+    zipCode = cep;
     final cepAbertoService = CepAbertoService();
 
     try {
@@ -53,6 +55,7 @@ class AddressViewModel extends ChangeNotifier {
           complement: '',
           number: '');
     } catch (e) {
+      onFail("CEP invalido");
       debugPrint(e.toString());
     } finally {
       loadingCep = false;
@@ -66,6 +69,7 @@ class AddressViewModel extends ChangeNotifier {
 
   void removeAddress() {
     address = null;
+    zipCode = null;
     calculateDeliveryPrice = false;
     notifyListeners();
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:loja_virtual/data/models/address.dart';
 import 'package:loja_virtual/infra/validators.dart';
+import 'package:loja_virtual/model/address.dart';
 import 'package:loja_virtual/ui/shared/widgets/button_loading_widget.dart';
 import 'package:loja_virtual/ui/viewModel/address_view_model.dart';
 import 'package:provider/provider.dart';
