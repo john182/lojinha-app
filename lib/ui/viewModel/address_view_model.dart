@@ -11,16 +11,32 @@ class AddressViewModel extends ChangeNotifier {
 
   num productsPrice = 0.0;
   num deliveryPrice = 0;
-
+  bool _loadingCep = false;
   bool _calculateCoordinates = false;
+  bool _calculateDeliveryPrice = false;
 
-  bool get isCalculateCoordinates => _calculateCoordinates;
+  bool get calculateCoordinates => _calculateCoordinates;
 
-  set isCalculateCoordinates(bool value) {
+  set calculateCoordinates(bool value) {
     _calculateCoordinates = value;
+    notifyListeners();
+  }
+
+  bool get loadingCep => _loadingCep;
+
+  set loadingCep(bool value) {
+    _loadingCep = value;
+  }
+
+  bool get calculateDeliveryPrice => _calculateDeliveryPrice;
+
+  set calculateDeliveryPrice(bool value) {
+    _calculateDeliveryPrice = value;
+    notifyListeners();
   }
 
   Future<void> getAddress(String cep) async {
+    loadingCep = true;
     final cepAbertoService = CepAbertoService();
 
     try {
@@ -36,9 +52,11 @@ class AddressViewModel extends ChangeNotifier {
           long: result.longitude,
           complement: '',
           number: '');
-      notifyListeners();
     } catch (e) {
       debugPrint(e.toString());
+    } finally {
+      loadingCep = false;
+      notifyListeners();
     }
   }
 
@@ -48,12 +66,13 @@ class AddressViewModel extends ChangeNotifier {
 
   void removeAddress() {
     address = null;
+    calculateDeliveryPrice = false;
     notifyListeners();
   }
 
   Future<void> calculateDelivery(double lat, double long,
       Function(String msg) onFail, Function? onSuccess) async {
-    isCalculateCoordinates = true;
+    calculateCoordinates = true;
     final doc = await _service.getCoordinates();
 
     final latStore = doc.get('lat') as double;
@@ -66,8 +85,8 @@ class AddressViewModel extends ChangeNotifier {
 
     dis /= 1000.0;
 
-    print('Distance $dis');
-    isCalculateCoordinates = false;
+    debugPrint('Distance $dis');
+    calculateCoordinates = false;
 
     if (dis > maxkm) {
       onFail("Endereço fora do raio de entrega");
@@ -76,7 +95,7 @@ class AddressViewModel extends ChangeNotifier {
     }
 
     deliveryPrice = base + dis * km;
-
+    calculateDeliveryPrice = true;
     notifyListeners();
   }
 }

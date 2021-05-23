@@ -15,7 +15,7 @@ class SingUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var viewModel = Provider.of<LoginViewModel>(context);
+    final viewModel = Provider.of<LoginViewModel>(context);
 
     return ScaffoldMessenger(
       key: scaffoldKey,

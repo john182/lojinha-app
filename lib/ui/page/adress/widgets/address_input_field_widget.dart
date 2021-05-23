@@ -121,7 +121,7 @@ class AddressInputFieldWidget extends StatelessWidget {
         Consumer<AddressViewModel>(builder: (_, viewModel, __) {
           return ButtonLoadingWidget(
             label: 'Calcular Frete',
-            loading: viewModel.isCalculateCoordinates,
+            loading: viewModel.calculateCoordinates,
             onPressed: () async {
               if (Form.of(context)!.validate()) {
                 Form.of(context)!.save();

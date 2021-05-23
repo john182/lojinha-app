@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/infra/routes.dart';
+import 'package:loja_virtual/ui/viewModel/address_view_model.dart';
 import 'package:loja_virtual/ui/viewModel/cart_view_model.dart';
 import 'package:loja_virtual/ui/viewModel/home_view_model.dart';
 import 'package:loja_virtual/ui/viewModel/login_view_model.dart';
@@ -36,6 +37,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => HomeViewModel(),
           lazy: false,
+        ),
+        ChangeNotifierProvider(
+          create: (_) => AddressViewModel(),
         ),
         ChangeNotifierProxyProvider<LoginViewModel, CartViewModel>(
           create: (_) => CartViewModel(),

@@ -76,7 +76,7 @@ class CarouselWidget extends StatelessWidget {
               selected: selected,
             );
           }).toList()
-            ..add(DotWidget()),
+            ..add(const DotWidget()),
         )
       ],
     );

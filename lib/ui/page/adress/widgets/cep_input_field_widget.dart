@@ -1,6 +1,7 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:loja_virtual/ui/shared/widgets/button_loading_widget.dart';
 import 'package:loja_virtual/ui/viewModel/address_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -34,13 +35,18 @@ class CepInputFieldWidget extends StatelessWidget {
             return null;
           },
         ),
-        ElevatedButton(
-          onPressed: () {
-            if (Form.of(context)!.validate()) {
-              context.read<AddressViewModel>().getAddress(cepController.text);
-            }
+        Consumer<AddressViewModel>(
+          builder: (_, viewModel, __) {
+            return ButtonLoadingWidget(
+              loading: viewModel.loadingCep,
+              onPressed: () {
+                if (Form.of(context)!.validate()) {
+                  viewModel.getAddress(cepController.text);
+                }
+              },
+              label: 'Buscar CEP',
+            );
           },
-          child: const Text('Buscar CEP'),
         ),
       ],
     );

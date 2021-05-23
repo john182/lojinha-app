@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loja_virtual/ui/viewModel/address_view_model.dart';
 import 'package:loja_virtual/ui/viewModel/cart_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -10,8 +11,11 @@ class PriceCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = context.watch<CartViewModel>();
-    final productsPrice = controller.productsPrice;
+    final cartViewModel = context.watch<CartViewModel>();
+    final adrresViewModel = context.watch<AddressViewModel>();
+    final productsPrice = cartViewModel.productsPrice;
+    final deliveryPrice = adrresViewModel.deliveryPrice;
+    final totalPrice = productsPrice + deliveryPrice;
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -39,6 +43,16 @@ class PriceCardWidget extends StatelessWidget {
               ],
             ),
             const Divider(),
+            if (adrresViewModel.calculateDeliveryPrice) ...[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  const Text('Entrega'),
+                  Text('R\$ ${deliveryPrice.toStringAsFixed(2)}')
+                ],
+              ),
+              const Divider(),
+            ],
             const SizedBox(
               height: 12,
             ),
@@ -50,7 +64,7 @@ class PriceCardWidget extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.w500),
                 ),
                 Text(
-                  'R\$ ${productsPrice.toStringAsFixed(2)}',
+                  'R\$ ${totalPrice.toStringAsFixed(2)}',
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 16,
