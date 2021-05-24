@@ -21,7 +21,11 @@ class AdrressPage extends StatelessWidget {
             builder: (_, viewModel, __) {
               return PriceCardWidget(
                 buttonText: 'Continuar para o Pagamento',
-                onPressed: !viewModel.calculateDeliveryPrice ? null : () {},
+                onPressed: !viewModel.calculateDeliveryPrice
+                    ? null
+                    : () {
+                        Navigator.of(context).pushNamed("/payments");
+                      },
               );
             },
           ),

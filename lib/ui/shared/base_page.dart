@@ -7,7 +7,12 @@ import 'package:loja_virtual/ui/viewModel/login_view_model.dart';
 import 'package:loja_virtual/ui/viewModel/page_view_model.dart';
 import 'package:provider/provider.dart';
 
-class BasePage extends StatelessWidget {
+class BasePage extends StatefulWidget {
+  @override
+  _BasePageState createState() => _BasePageState();
+}
+
+class _BasePageState extends State<BasePage> {
   final PageController pageController = PageController();
 
   @override
