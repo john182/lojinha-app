@@ -3,8 +3,9 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:loja_virtual/infra/firebase_erros.dart';
-import 'package:loja_virtual/model/cart_product_model.dart';
+import 'package:loja_virtual/model/ordem_item.dart';
 import 'package:loja_virtual/model/user.dart' as users;
 
 class UserService {
@@ -77,7 +78,7 @@ class UserService {
 
   Future<void> saveToken() async {
     final token = await FirebaseMessaging.instance.getToken();
-    print("token1 " + token!);
+    debugPrint("token1 ${token!}");
 
     await tokensReference.doc(token).set({
       'token': token,
@@ -90,11 +91,11 @@ class UserService {
     auth.signOut();
   }
 
-  void updateCartProduct(CartProductModel cartProduct) {
-    cartReference.doc(cartProduct.id).update(cartProduct.toMap());
+  void updateCartProduct(OrderItem item) {
+    cartReference.doc(item.id).update(item.toMap());
   }
 
-  void removeCart(CartProductModel cartProduct) {
-    cartReference.doc(cartProduct.id).delete();
+  void removeCart(OrderItem item) {
+    cartReference.doc(item.id).delete();
   }
 }

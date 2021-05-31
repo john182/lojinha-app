@@ -19,7 +19,8 @@ class Routes {
       case '/singin':
         return MaterialPageRoute(builder: (_) => SingIn());
       case '/cart':
-        return MaterialPageRoute(builder: (_) => CartPage());
+        return MaterialPageRoute(
+            builder: (_) => CartPage(), settings: settings);
       case '/address':
         return MaterialPageRoute(builder: (_) => const AdrressPage());
       case '/payments':

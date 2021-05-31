@@ -3,7 +3,7 @@ import 'package:loja_virtual/model/product.dart';
 
 import 'item_size.dart';
 
-class CartProductModel {
+class OrderItem {
   String? id;
   String productId;
   int quantity;
@@ -11,15 +11,15 @@ class CartProductModel {
 
   Product? product;
 
-  CartProductModel(
+  OrderItem(
       {this.id,
       required this.productId,
       required this.quantity,
       required this.size,
       this.product});
 
-  factory CartProductModel.fromProduct(Product prod, String size) {
-    return CartProductModel(
+  factory OrderItem.fromProduct(Product prod, String size) {
+    return OrderItem(
       productId: prod.id!,
       quantity: 1,
       size: size,
@@ -27,8 +27,8 @@ class CartProductModel {
     );
   }
 
-  factory CartProductModel.fromDocument(DocumentSnapshot document) {
-    return CartProductModel(
+  factory OrderItem.fromDocument(DocumentSnapshot document) {
+    return OrderItem(
       id: document.id,
       productId: document.get('pid') as String,
       quantity: document.get('quantity') as int,

@@ -13,7 +13,7 @@ class PriceCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartViewModel = context.watch<CartViewModel>();
     final adrresViewModel = context.watch<AddressViewModel>();
-    final productsPrice = cartViewModel.productsPrice;
+    final productsPrice = cartViewModel.order.price;
     final deliveryPrice = adrresViewModel.deliveryPrice;
     final totalPrice = productsPrice + deliveryPrice;
 

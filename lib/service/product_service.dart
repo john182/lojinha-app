@@ -6,6 +6,7 @@ import 'package:loja_virtual/model/product.dart';
 
 class ProductService {
   final _firestore = FirebaseFirestore.instance;
+
   final _storage = FirebaseStorage.instance;
 
   String? id;

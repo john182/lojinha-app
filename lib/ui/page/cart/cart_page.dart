@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:loja_virtual/model/cart_product_model.dart';
+import 'package:loja_virtual/model/ordem_item.dart';
 import 'package:loja_virtual/ui/page/cart/widgets/cart_item_widget.dart';
 import 'package:loja_virtual/ui/page/cart/widgets/empty_cart_widget.dart';
 import 'package:loja_virtual/ui/shared/widgets/price_cart_widget.dart';
@@ -17,8 +17,8 @@ class CartPage extends StatelessWidget {
       ),
       body: Consumer<CartViewModel>(
         builder: (_, viewModel, __) {
-          debugPrint(viewModel.items.length.toString());
-          return viewModel.items.isEmpty
+          debugPrint(viewModel.order.items.length.toString());
+          return viewModel.order.items.isEmpty
               ? const EmptyCart(
                   title: 'Nenhum produto no carrinho!',
                   iconData: Icons.remove_shopping_cart,
@@ -26,13 +26,12 @@ class CartPage extends StatelessWidget {
               : ListView(
                   children: [
                     Column(
-                      children: viewModel.items
+                      children: viewModel.order.items
                           .map(
                               (cartProduct) => CartItemWidget(CartItemViewModel(
                                   item: cartProduct,
                                   onRemove: (item) {
-                                    viewModel
-                                        .removeOfCart(item as CartProductModel);
+                                    viewModel.removeOfCart(item as OrderItem);
                                   },
                                   onUpdateQuantity: () {
                                     viewModel.updatePrice();
@@ -42,8 +41,9 @@ class CartPage extends StatelessWidget {
                     PriceCardWidget(
                       buttonText: 'Continuar para Entrega',
                       onPressed:
-                          viewModel.isCartValid && viewModel.items.isNotEmpty
-                              ? () {
+                      viewModel.isCartValid &&
+                              viewModel.order.items.isNotEmpty
+                          ? () {
                                   Navigator.of(context).pushNamed('/address');
                                 }
                               : null,

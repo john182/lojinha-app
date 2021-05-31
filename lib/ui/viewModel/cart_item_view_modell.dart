@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:loja_virtual/infra/locator.dart';
-import 'package:loja_virtual/model/cart_product_model.dart';
+import 'package:loja_virtual/model/ordem_item.dart';
 import 'package:loja_virtual/service/user_service.dart';
 
 class CartItemViewModel extends ChangeNotifier {
-  CartProductModel item;
+  OrderItem item;
   final Function onUpdateQuantity;
   final Function onRemove;
 

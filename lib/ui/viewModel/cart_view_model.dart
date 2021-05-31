@@ -1,28 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:loja_virtual/infra/locator.dart';
-import 'package:loja_virtual/model/cart_product_model.dart';
+import 'package:loja_virtual/model/ordem_item.dart';
+import 'package:loja_virtual/model/order.dart';
 import 'package:loja_virtual/model/product.dart';
 import 'package:loja_virtual/model/user.dart';
 import 'package:loja_virtual/service/product_service.dart';
 import 'package:loja_virtual/service/user_service.dart';
 
 class CartViewModel extends ChangeNotifier {
-  List<CartProductModel> items = [];
   User? user;
-  num productsPrice = 0.0;
+
+  Order order = Order.init();
 
   final UserService _service = locator<UserService>();
   final ProductService _serviceProduct = locator<ProductService>();
 
   void addToCart(Product product, String size) {
     try {
-      final item = items.firstWhere(
+      final item = order.items.firstWhere(
           (prod) => product.id == prod.productId && prod.size == size);
       item.quantity++;
     } catch (e) {
-      final cartProduct = CartProductModel.fromProduct(product, size);
-      items.add(cartProduct);
+      final cartProduct = OrderItem.fromProduct(product, size);
+      order.items.add(cartProduct);
       _service.cartReference
           .add(cartProduct.toMap())
           .then((doc) => cartProduct.id = doc.id);
@@ -31,8 +32,8 @@ class CartViewModel extends ChangeNotifier {
     calcAmount();
   }
 
-  void removeOfCart(CartProductModel cartProduct) {
-    items.removeWhere((p) => p.id == cartProduct.id);
+  void removeOfCart(OrderItem cartProduct) {
+    order.items.removeWhere((p) => p.id == cartProduct.id);
 
     _service.removeCart(cartProduct);
 
@@ -41,7 +42,7 @@ class CartViewModel extends ChangeNotifier {
 
   void updateUser(User? user) {
     this.user = user;
-    items.clear();
+    order.items.clear();
 
     if (user != null) {
       _loadCartItems();
@@ -55,17 +56,17 @@ class CartViewModel extends ChangeNotifier {
       final docProd =
           await _serviceProduct.getProduct(doc.get('pid') as String);
       final product = Product.fromDocument(docProd!);
-      final item = CartProductModel.fromDocument(doc);
+      final item = OrderItem.fromDocument(doc);
 
       item.product = product;
-      items.add(item);
-      productsPrice += item.totalPrice;
+      order.items.add(item);
+      order.price += item.totalPrice;
     }
   }
 
   void calcAmount() {
-    productsPrice = items.isNotEmpty
-        ? items
+    order.price = order.items.isNotEmpty
+        ? order.items
             .map((e) => e.totalPrice)
             .reduce((value, element) => value + element)
         : 0.0;
@@ -76,8 +77,12 @@ class CartViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void notify() {
+    notifyListeners();
+  }
+
   bool get isCartValid {
-    for (final cartProduct in items) {
+    for (final cartProduct in order.items) {
       if (!cartProduct.hasStock) return false;
     }
     return true;
