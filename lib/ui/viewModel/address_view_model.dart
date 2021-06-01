@@ -36,6 +36,13 @@ class AddressViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> initAddress(Address? address) async {
+    this.address = address ?? this.address;
+    if (address != null) {
+      await calculateDelivery(address.lat, address.long, (e) {}, null);
+    }
+  }
+
   Future<void> getAddress(String cep, Function(String msg) onFail) async {
     loadingCep = true;
     zipCode = cep;

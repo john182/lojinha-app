@@ -22,6 +22,7 @@ class User {
 
   factory User.fromDocument(DocumentSnapshot doc) {
     return User(
+        id: doc.get('id') as String,
         email: doc.get('email') as String,
         password: '',
         name: doc.get('name') as String,

@@ -15,32 +15,60 @@ class PaymentsPage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => PaymentsViewModel(),
       child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text('Payments'),
-        ),
-        body: ListView(
-          children: [
-            Consumer<PaymentsViewModel>(
-              builder: (_, viewModel, __) {
-                return PriceCardWidget(
-                  buttonText: "Finalizar Pedido",
-                  onPressed: () {
-                    viewModel.checkout(
-                        order: cartViewModel.order,
-                        user: userViewModel.user!,
-                        onStockFail: (e) {
-                          cartViewModel.notify();
-                          Navigator.of(context).popUntil(
-                              (route) => route.settings.name == '/cart');
-                        });
-                  },
+          appBar: AppBar(
+            centerTitle: true,
+            title: const Text('Payments'),
+          ),
+          body: Consumer<PaymentsViewModel>(
+            builder: (_, viewModel, __) {
+              if (viewModel.loading) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation(
+                            Theme.of(context).primaryColor),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Text(
+                        'Processando seu pagamento...',
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.w800,
+                            fontSize: 16),
+                      )
+                    ],
+                  ),
                 );
-              },
-            )
-          ],
-        ),
-      ),
+              }
+
+              return ListView(
+                children: [
+                  PriceCardWidget(
+                    buttonText: "Finalizar Pedido",
+                    onPressed: () {
+                      viewModel.checkout(
+                          order: cartViewModel.order,
+                          user: userViewModel.user!,
+                          onStockFail: (e) {
+                            cartViewModel.notify();
+                            Navigator.of(context).popUntil(
+                                (route) => route.settings.name == '/cart');
+                          },
+                          onSuccess: () async {
+                            cartViewModel.clear();
+                            Navigator.of(context).popUntil(
+                                (route) => route.settings.name == '/');
+                          });
+                    },
+                  ),
+                ],
+              );
+            },
+          )),
     );
   }
 }

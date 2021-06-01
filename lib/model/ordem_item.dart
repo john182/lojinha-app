@@ -8,7 +8,7 @@ class OrderItem {
   String productId;
   int quantity;
   String size;
-
+  num? fixedPrice;
   Product? product;
 
   OrderItem(
@@ -41,6 +41,7 @@ class OrderItem {
       'pid': productId,
       'quantity': quantity,
       'size': size,
+      'fixedPrice': fixedPrice ?? unitPrice,
     };
   }
 

@@ -16,6 +16,16 @@ class CartViewModel extends ChangeNotifier {
   final UserService _service = locator<UserService>();
   final ProductService _serviceProduct = locator<ProductService>();
 
+  void clear() {
+    for (final item in order.items) {
+      _service.removeCart(item);
+    }
+
+    order = Order.init();
+
+    notifyListeners();
+  }
+
   void addToCart(Product product, String size) {
     try {
       final item = order.items.firstWhere(

@@ -13,7 +13,8 @@ class Routes {
   static Route<dynamic> definerRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => BasePage());
+        return MaterialPageRoute(
+            builder: (_) => BasePage(), settings: settings);
       case '/singup':
         return MaterialPageRoute(builder: (_) => SingUp());
       case '/singin':
@@ -32,7 +33,8 @@ class Routes {
         return MaterialPageRoute(
             builder: (_) => EditProduct(settings.arguments! as Product));
       default:
-        return MaterialPageRoute(builder: (_) => BasePage());
+        return MaterialPageRoute(
+            builder: (_) => BasePage(), settings: settings);
     }
   }
 }

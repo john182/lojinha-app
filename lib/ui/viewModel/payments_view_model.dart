@@ -7,15 +7,28 @@ import 'package:loja_virtual/service/order_service.dart';
 class PaymentsViewModel extends ChangeNotifier {
   final OrderService _service = locator<OrderService>();
 
-  Future<void> checkout(
-      {required Order order, Function? onStockFail, required User user}) async {
+  bool _loading = false;
+
+  bool get loading => _loading;
+
+  set loading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
+
+  Future<void> checkout({
+    required Order order,
+    required User user,
+    required Function onStockFail,
+    required Function onSuccess,
+  }) async {
+    loading = true;
     try {
       await _service.decrementStock(order.items);
     } catch (e) {
-      if (onStockFail != null) {
-        onStockFail(e);
-      }
+      onStockFail(e);
 
+      loading = false;
       debugPrint(e.toString());
       return;
     }
@@ -29,7 +42,8 @@ class PaymentsViewModel extends ChangeNotifier {
         address: order.address);
 
     newOrder.orderId = orderId.toString();
-
-    await _service.save(order.orderId!, newOrder.toMap());
+    onSuccess();
+    await _service.save(newOrder.orderId!, newOrder.toMap());
+    loading = false;
   }
 }

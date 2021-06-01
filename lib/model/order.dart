@@ -39,6 +39,7 @@ class Order {
   Map<String, dynamic> toMap() {
     // ignore: unnecessary_cast
     return {
+      'userId': userId,
       'items': items.map((e) => e.toMap()).toList(),
       'price': price,
       'address': address?.toMap(),
