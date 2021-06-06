@@ -28,6 +28,17 @@ class Product {
             .toList());
   }
 
+  factory Product.fromMap(Map<String, dynamic> map) {
+    return Product(
+        id: map['id'] as String?,
+        name: map['name'] as String,
+        description: map['description'] as String,
+        images: List<String>.from(map['images'] as List<dynamic>),
+        sizes: (map['sizes'] as List<dynamic>)
+            .map((s) => ItemSize.fromMap(s as Map<String, dynamic>))
+            .toList());
+  }
+
   List<Map<String, dynamic>> exportSizeList() {
     return sizes.map((size) => size.toMap()).toList();
   }

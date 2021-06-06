@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:loja_virtual/model/ordem_item.dart';
 import 'package:loja_virtual/model/product.dart';
+import 'package:loja_virtual/model/user.dart';
 
 class OrderService {
   final _firestore = FirebaseFirestore.instance;
@@ -38,7 +41,7 @@ class OrderService {
               productsToUpdate.firstWhere((p) => p.id == cartProduct.productId);
         } else {
           final doc =
-              await tx.get(_firestore.doc('products/${cartProduct.productId}'));
+          await tx.get(_firestore.doc('products/${cartProduct.productId}'));
           product = Product.fromDocument(doc);
         }
 
@@ -67,5 +70,14 @@ class OrderService {
 
   Future<void> save(String id, Map<String, dynamic> map) async {
     _firestore.collection('orders').doc(id).set(map);
+  }
+
+  Stream<QuerySnapshot> listenToOrders(User user) {
+    final snapshots = _firestore
+        .collection('orders')
+        .where('userId', isEqualTo: user.id)
+        .snapshots();
+
+    return snapshots;
   }
 }

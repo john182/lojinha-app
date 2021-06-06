@@ -11,6 +11,7 @@ import 'package:loja_virtual/ui/viewModel/users_view_model.dart';
 import 'package:provider/provider.dart';
 
 import 'infra/locator.dart';
+import 'ui/viewModel/payments_view_model.dart';
 
 void main() async {
   setupLocator();
@@ -52,6 +53,12 @@ class MyApp extends StatelessWidget {
           lazy: false,
           update: (_, loginController, usersController) =>
               usersController!..updateUser(loginController.adminEnabled),
+        ),
+        ChangeNotifierProxyProvider<LoginViewModel, PaymentsViewModel>(
+          create: (_) => PaymentsViewModel(),
+          lazy: false,
+          update: (_, userViewModel, orderViewModel) =>
+              orderViewModel!..updateUser(userViewModel.user),
         ),
       ],
       child: MaterialApp(

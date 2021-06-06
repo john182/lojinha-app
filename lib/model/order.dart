@@ -13,7 +13,7 @@ class Order {
   Order({
     this.orderId,
     this.userId,
-    this.items = const [],
+    required this.items,
     this.price = 0.0,
     this.address,
     this.date,
@@ -27,25 +27,24 @@ class Order {
 
   factory Order.fromMap(Map<String, dynamic> map) {
     return Order(
-      orderId: map['orderId'] as String,
+      orderId: map['orderId'] as String?,
       userId: map['userId'] as String,
-      items: map['items'] as List<OrderItem>,
+      items: (map['items'] as List<dynamic>)
+          .map((e) => OrderItem.fromMap(e as Map<String, dynamic>))
+          .toList(),
       price: map['price'] as num,
-      address: map['address'] as Address,
-      date: map['date'] as DateTime,
+      address: Address.fromMap(map['address'] as Map<String, dynamic>),
     );
   }
 
   Map<String, dynamic> toMap() {
-    // ignore: unnecessary_cast
     return {
       'userId': userId,
       'items': items.map((e) => e.toMap()).toList(),
       'price': price,
       'address': address?.toMap(),
-    } as Map<String, dynamic>;
+    };
   }
 
-//</editor-fold>
-
+  String get formattedId => '#${orderId?.padLeft(6, '0')}';
 }

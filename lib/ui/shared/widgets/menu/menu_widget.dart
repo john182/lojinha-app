@@ -17,25 +17,25 @@ class MenuWidget extends StatelessWidget {
               iconData: Icons.list, title: 'Produtos', page: 1),
           Consumer<LoginViewModel>(
             builder: (_, userManager, __) {
-              if (userManager.adminEnabled) {
-                return Column(
-                  children: const [
-                    Divider(),
-                    MenuItemWidget(
+              return Column(
+                children: [
+                  if (userManager.isLoggedIn) ...[
+                    const MenuItemWidget(
+                      iconData: Icons.settings,
+                      title: 'Pedidos',
+                      page: 2,
+                    ),
+                  ],
+                  if (userManager.adminEnabled) ...[
+                    const Divider(),
+                    const MenuItemWidget(
                       iconData: Icons.settings,
                       title: 'Usuários',
                       page: 4,
                     ),
-                    MenuItemWidget(
-                      iconData: Icons.settings,
-                      title: 'Pedidos',
-                      page: 5,
-                    ),
-                  ],
-                );
-              } else {
-                return Container();
-              }
+                  ]
+                ],
+              );
             },
           )
           // const MenuItem(

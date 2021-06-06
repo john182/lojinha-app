@@ -16,6 +16,7 @@ class OrderItem {
       required this.productId,
       required this.quantity,
       required this.size,
+      this.fixedPrice,
       this.product});
 
   factory OrderItem.fromProduct(Product prod, String size) {
@@ -36,12 +37,23 @@ class OrderItem {
     );
   }
 
+  factory OrderItem.fromMap(Map<String, dynamic> map) {
+    return OrderItem(
+      id: map['id'] as String?,
+      productId: map['productId'] as String,
+      quantity: map['quantity'] as int,
+      size: map['size'] as String,
+      fixedPrice: 0,
+      product: Product.fromMap(map['product'] as Map<String, dynamic>),
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return {
-      'pid': productId,
+      'productId': productId,
       'quantity': quantity,
       'size': size,
-      'fixedPrice': fixedPrice ?? unitPrice,
+      'fixedPrice': fixedPrice,
     };
   }
 
