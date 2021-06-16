@@ -58,10 +58,12 @@ class PaymentsPage extends StatelessWidget {
                             Navigator.of(context).popUntil(
                                 (route) => route.settings.name == '/cart');
                           },
-                          onSuccess: () async {
+                          onSuccess: (order) async {
                             cartViewModel.clear();
                             Navigator.of(context).popUntil(
                                 (route) => route.settings.name == '/');
+                            Navigator.of(context)
+                                .pushNamed('/confirmation', arguments: order);
                           });
                     },
                   ),

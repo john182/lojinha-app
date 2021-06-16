@@ -35,7 +35,7 @@ class PaymentsViewModel extends ChangeNotifier {
     required Order order,
     required User user,
     required Function onStockFail,
-    required Function onSuccess,
+    required Function(Order order) onSuccess,
   }) async {
     loading = true;
     try {
@@ -57,7 +57,7 @@ class PaymentsViewModel extends ChangeNotifier {
         address: order.address);
 
     newOrder.orderId = orderId.toString();
-    onSuccess();
+    onSuccess(newOrder);
     await _service.save(newOrder.orderId!, newOrder.toMap());
     loading = false;
   }
