@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loja_virtual/ui/page/admin_orders/admin_orders_page.dart';
 import 'package:loja_virtual/ui/page/home/home_page.dart';
 import 'package:loja_virtual/ui/page/orders/orders_page.dart';
 import 'package:loja_virtual/ui/page/products/products_page.dart';
@@ -27,9 +28,10 @@ class _BasePageState extends State<BasePage> {
               children: <Widget>[
                 HomePage(),
                 ProductsPage(),
-                OrdersPage(),
+                const OrdersPage(),
                 if (userManager.adminEnabled) ...[
                   UsersPage(),
+                  const AdminOrdersPage()
                 ]
               ],
             );

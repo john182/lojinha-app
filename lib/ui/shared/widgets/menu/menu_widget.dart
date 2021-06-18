@@ -19,10 +19,10 @@ class MenuWidget extends StatelessWidget {
             builder: (_, userManager, __) {
               return Column(
                 children: [
-                  if (userManager.isLoggedIn) ...[
+                  if (userManager.isLoggedIn && !userManager.adminEnabled) ...[
                     const MenuItemWidget(
                       iconData: Icons.settings,
-                      title: 'Pedidos',
+                      title: 'Meus Pedidos',
                       page: 2,
                     ),
                   ],
@@ -31,6 +31,11 @@ class MenuWidget extends StatelessWidget {
                     const MenuItemWidget(
                       iconData: Icons.settings,
                       title: 'Usuários',
+                      page: 3,
+                    ),
+                    const MenuItemWidget(
+                      iconData: Icons.settings,
+                      title: 'Pedidos',
                       page: 4,
                     ),
                   ]

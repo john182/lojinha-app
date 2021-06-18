@@ -72,11 +72,17 @@ class OrderService {
     _firestore.collection('orders').doc(id).set(map);
   }
 
-  Stream<QuerySnapshot> listenToOrders(User user) {
+  Stream<QuerySnapshot> listenToOrdersByUser(User user) {
     final snapshots = _firestore
         .collection('orders')
         .where('userId', isEqualTo: user.id)
         .snapshots();
+
+    return snapshots;
+  }
+
+  Stream<QuerySnapshot> listenToOrders() {
+    final snapshots = _firestore.collection('orders').snapshots();
 
     return snapshots;
   }

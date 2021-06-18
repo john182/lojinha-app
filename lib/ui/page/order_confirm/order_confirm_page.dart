@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/model/order.dart';
-import 'package:loja_virtual/ui/page/orders/widget/orders_item_detail_widget.dart';
+import 'package:loja_virtual/ui/shared/widgets/orders/orders_item_detail_widget.dart';
 
 class OrderConfirmPage extends StatelessWidget {
   final Order order;

@@ -23,7 +23,7 @@ class PaymentsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  updateUser(User? user) {
+  void updateUser(User? user) {
     this.user = user;
 
     if (user != null) {
@@ -63,7 +63,7 @@ class PaymentsViewModel extends ChangeNotifier {
   }
 
   void _listenToOrders(User user) {
-    _subscription = _service.listenToOrders(user).listen((event) async {
+    _subscription = _service.listenToOrdersByUser(user).listen((event) async {
       for (final doc in event.docs) {
         final Map<String, dynamic> map = doc.data();
         map['orderId'] = doc.id;
