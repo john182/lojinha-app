@@ -86,4 +86,8 @@ class OrderService {
 
     return snapshots;
   }
+
+  Future<void> updateStatus(String id, int status) {
+    return _firestore.collection('orders').doc(id).update({'status': status});
+  }
 }

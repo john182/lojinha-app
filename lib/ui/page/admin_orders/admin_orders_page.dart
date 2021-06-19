@@ -28,6 +28,7 @@ class AdminOrdersPage extends StatelessWidget {
               itemCount: viewModel.orders.length,
               itemBuilder: (_, index) {
                 return OrdersItemWidget(
+                  showControls: true,
                   order: viewModel.orders.reversed.toList()[index],
                 );
               });

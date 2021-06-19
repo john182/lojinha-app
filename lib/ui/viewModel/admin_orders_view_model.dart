@@ -13,6 +13,26 @@ class AdminOrdersViewModel extends ChangeNotifier {
   List<Order> orders = [];
   StreamSubscription? _subscription;
 
+  Function()? back(Order order) {
+    return order.status.index >= Status.transporting.index
+        ? () async {
+            await _changeStatus(order.orderId!, order.status.index - 1);
+          }
+        : null;
+  }
+
+  Function()? advance(Order order) {
+    return order.status.index <= Status.transporting.index
+        ? () async {
+            await _changeStatus(order.orderId!, order.status.index + 1);
+          }
+        : null;
+  }
+
+  Future<void> cancel(Order order) async {
+    await _changeStatus(order.orderId!, Status.canceled.index);
+  }
+
   void updateAdmin({required bool adminEnabled}) {
     orders.clear();
 
@@ -24,6 +44,7 @@ class AdminOrdersViewModel extends ChangeNotifier {
 
   void _listenToOrders() {
     _subscription = _service.listenToOrders().listen((event) async {
+      orders.clear();
       for (final doc in event.docs) {
         final Map<String, dynamic> map = doc.data();
         map['orderId'] = doc.id;
@@ -39,6 +60,10 @@ class AdminOrdersViewModel extends ChangeNotifier {
       }
       notifyListeners();
     });
+  }
+
+  Future<void> _changeStatus(String id, int status) async {
+    await _service.updateStatus(id, status);
   }
 
   @override

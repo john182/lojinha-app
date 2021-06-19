@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:loja_virtual/model/ordem_item.dart';
 
 import 'address.dart';
+
+enum Status { canceled, pending, preparing, transporting, delivered }
 
 class Order {
   String? orderId;
@@ -9,6 +12,7 @@ class Order {
   num price;
   Address? address;
   DateTime? date;
+  Status status;
 
   Order({
     this.orderId,
@@ -17,6 +21,7 @@ class Order {
     this.price = 0.0,
     this.address,
     this.date,
+    this.status = Status.pending,
   });
 
   factory Order.init() {
@@ -34,6 +39,7 @@ class Order {
           .toList(),
       price: map['price'] as num,
       address: Address.fromMap(map['address'] as Map<String, dynamic>),
+      status: Status.values[map['status'] as int],
     );
   }
 
@@ -42,7 +48,9 @@ class Order {
       'userId': userId,
       'items': items.map((e) => e.toMap()).toList(),
       'price': price,
+      'status': status.index,
       'address': address?.toMap(),
+      'date': Timestamp.now()
     };
   }
 

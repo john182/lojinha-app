@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:loja_virtual/infra/ext/status_order_ext.dart';
 import 'package:loja_virtual/model/order.dart';
+import 'package:loja_virtual/ui/page/admin_orders/widgets/status_action_widget.dart';
 import 'package:loja_virtual/ui/shared/widgets/orders/orders_item_detail_widget.dart';
 
 class OrdersItemWidget extends StatelessWidget {
   final Order order;
+  final bool showControls;
 
-  const OrdersItemWidget({Key? key, required this.order}) : super(key: key);
+  const OrdersItemWidget(
+      {Key? key, required this.order, this.showControls = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +43,11 @@ class OrdersItemWidget extends StatelessWidget {
               ],
             ),
             Text(
-              'Em transporte',
+              order.status.name,
               style: TextStyle(
                 fontWeight: FontWeight.w400,
-                color: primaryColor,
+                color:
+                    order.status == Status.canceled ? Colors.red : primaryColor,
                 fontSize: 14,
               ),
             )
@@ -52,7 +58,9 @@ class OrdersItemWidget extends StatelessWidget {
             children: order.items
                 .map((e) => OrdersItemDatailWidget(item: e))
                 .toList(),
-          )
+          ),
+          if (showControls && order.status != Status.canceled)
+            StatusActionWdiget(order: order)
         ],
       ),
     );
