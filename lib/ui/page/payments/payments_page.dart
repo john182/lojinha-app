@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loja_virtual/ui/shared/widgets/price_cart_widget.dart';
 import 'package:loja_virtual/ui/viewModel/cart_view_model.dart';
 import 'package:loja_virtual/ui/viewModel/login_view_model.dart';
-import 'package:loja_virtual/ui/viewModel/payments_view_model.dart';
+import 'package:loja_virtual/ui/viewModel/order_view_model.dart';
 import 'package:provider/provider.dart';
 
 class PaymentsPage extends StatelessWidget {
@@ -13,13 +13,13 @@ class PaymentsPage extends StatelessWidget {
     final userViewModel = context.watch<LoginViewModel>();
     final cartViewModel = context.watch<CartViewModel>();
     return ChangeNotifierProvider(
-      create: (_) => PaymentsViewModel(),
+      create: (_) => OrderViewModel(),
       child: Scaffold(
           appBar: AppBar(
             centerTitle: true,
             title: const Text('Payments'),
           ),
-          body: Consumer<PaymentsViewModel>(
+          body: Consumer<OrderViewModel>(
             builder: (_, viewModel, __) {
               if (viewModel.loading) {
                 return Center(

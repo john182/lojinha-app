@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/ui/shared/widgets/empty_card_wdiget.dart';
+import 'package:loja_virtual/ui/shared/widgets/icon_button_widget.dart';
 import 'package:loja_virtual/ui/shared/widgets/menu/menu_widget.dart';
 import 'package:loja_virtual/ui/shared/widgets/orders/orders_item_widget.dart';
 import 'package:loja_virtual/ui/viewModel/admin_orders_view_model.dart';
@@ -18,20 +19,55 @@ class AdminOrdersPage extends StatelessWidget {
       ),
       body: Consumer<AdminOrdersViewModel>(
         builder: (_, viewModel, __) {
-          if (viewModel.orders.isEmpty) {
-            return const EmptyCardWidget(
-              title: 'Nenhuma compra encontrada!',
-              iconData: Icons.border_clear,
-            );
-          }
-          return ListView.builder(
-              itemCount: viewModel.orders.length,
-              itemBuilder: (_, index) {
-                return OrdersItemWidget(
-                  showControls: true,
-                  order: viewModel.orders.reversed.toList()[index],
-                );
-              });
+          final filteredOrders = viewModel.filteredOrders;
+
+          return Column(
+            children: [
+              if (viewModel.userFilter != null)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 2),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(
+                          'Pedidos de ${viewModel.userFilter?.name ?? ""}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w800,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      IconButtonWidget(
+                        iconData: Icons.close,
+                        color: Colors.white,
+                        onTap: () {
+                          viewModel.setUserFilter(null);
+                        },
+                      )
+                    ],
+                  ),
+                ),
+              if (filteredOrders.isEmpty)
+                const Expanded(
+                  child: EmptyCardWidget(
+                    title: 'Nenhuma compra encontrada!',
+                    iconData: Icons.border_clear,
+                  ),
+                )
+              else
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: filteredOrders.length,
+                    itemBuilder: (_, index) {
+                      return OrdersItemWidget(
+                        showControls: true,
+                        order: filteredOrders.reversed.toList()[index],
+                      );
+                    },
+                  ),
+                )
+            ],
+          );
         },
       ),
     );

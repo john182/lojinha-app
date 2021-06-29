@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loja_virtual/ui/shared/widgets/empty_card_wdiget.dart';
 import 'package:loja_virtual/ui/shared/widgets/menu/menu_widget.dart';
 import 'package:loja_virtual/ui/shared/widgets/orders/orders_item_widget.dart';
-import 'package:loja_virtual/ui/viewModel/payments_view_model.dart';
+import 'package:loja_virtual/ui/viewModel/orders_view_model.dart';
 import 'package:provider/provider.dart';
 
 class OrdersPage extends StatelessWidget {
@@ -16,7 +16,7 @@ class OrdersPage extends StatelessWidget {
         title: const Text('Meus Pedidos'),
         centerTitle: true,
       ),
-      body: Consumer<PaymentsViewModel>(
+      body: Consumer<OrdersViewModel>(
         builder: (_, viewModel, __) {
           if (viewModel.orders.isEmpty) {
             return const EmptyCardWidget(

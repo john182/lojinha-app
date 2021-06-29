@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/infra/locator.dart';
 import 'package:loja_virtual/model/order.dart';
+import 'package:loja_virtual/model/user.dart';
 import 'package:loja_virtual/service/order_service.dart';
 import 'package:loja_virtual/service/product_service.dart';
 
@@ -10,7 +11,9 @@ class AdminOrdersViewModel extends ChangeNotifier {
   final OrderService _service = locator<OrderService>();
   final ProductService _productService = locator<ProductService>();
 
-  List<Order> orders = [];
+  final List<Order> _orders = [];
+  List<Status> statusFilter = [Status.preparing];
+  User? userFilter;
   StreamSubscription? _subscription;
 
   Function()? back(Order order) {
@@ -34,7 +37,7 @@ class AdminOrdersViewModel extends ChangeNotifier {
   }
 
   void updateAdmin({required bool adminEnabled}) {
-    orders.clear();
+    _orders.clear();
 
     _subscription?.cancel();
     if (adminEnabled) {
@@ -42,9 +45,33 @@ class AdminOrdersViewModel extends ChangeNotifier {
     }
   }
 
+  void setUserFilter(User? user) {
+    userFilter = user;
+    notifyListeners();
+  }
+
+  void setStatusFilter({required Status status, bool enabled = false}) {
+    if (enabled) {
+      statusFilter.add(status);
+    } else {
+      statusFilter.remove(status);
+    }
+    notifyListeners();
+  }
+
+  List<Order> get filteredOrders {
+    List<Order> output = _orders.reversed.toList();
+
+    if (userFilter != null) {
+      output = output.where((o) => o.userId == userFilter?.id).toList();
+    }
+
+    return output.where((o) => statusFilter.contains(o.status)).toList();
+  }
+
   void _listenToOrders() {
     _subscription = _service.listenToOrders().listen((event) async {
-      orders.clear();
+      _orders.clear();
       for (final doc in event.docs) {
         final Map<String, dynamic> map = doc.data();
         map['orderId'] = doc.id;
@@ -56,7 +83,7 @@ class AdminOrdersViewModel extends ChangeNotifier {
           map['product'] = mapProd;
         }
 
-        orders.add(Order.fromMap(map));
+        _orders.add(Order.fromMap(map));
       }
       notifyListeners();
     });

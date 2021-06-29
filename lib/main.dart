@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 
 import 'infra/locator.dart';
 import 'ui/viewModel/admin_orders_view_model.dart';
-import 'ui/viewModel/payments_view_model.dart';
+import 'ui/viewModel/orders_view_model.dart';
 
 void main() async {
   setupLocator();
@@ -52,14 +52,14 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<LoginViewModel, UsersViewModel>(
           create: (_) => UsersViewModel(),
           lazy: false,
-          update: (_, loginController, usersController) =>
-              usersController!..updateUser(loginController.adminEnabled),
+          update: (_, loginController, usersController) => usersController!
+            ..updateUser(adminEnabled: loginController.adminEnabled),
         ),
-        ChangeNotifierProxyProvider<LoginViewModel, PaymentsViewModel>(
-          create: (_) => PaymentsViewModel(),
+        ChangeNotifierProxyProvider<LoginViewModel, OrdersViewModel>(
+          create: (_) => OrdersViewModel(),
           lazy: false,
-          update: (_, userViewModel, orderViewModel) =>
-              orderViewModel!..updateUser(userViewModel.user),
+          update: (_, userViewModel, ordersViewModel) =>
+              ordersViewModel!..updateUser(userViewModel.user),
         ),
         ChangeNotifierProxyProvider<LoginViewModel, AdminOrdersViewModel>(
           create: (_) => AdminOrdersViewModel(),

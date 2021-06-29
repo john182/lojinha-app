@@ -10,7 +10,7 @@ class UsersViewModel extends ChangeNotifier {
 
   final UserService _service = locator<UserService>();
 
-  void updateUser(bool adminEnabled) {
+  void updateUser({required bool adminEnabled}) {
     if (adminEnabled) {
       _listenToUsers();
     }
