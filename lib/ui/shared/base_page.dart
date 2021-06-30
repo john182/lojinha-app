@@ -28,11 +28,11 @@ class _BasePageState extends State<BasePage> {
               children: <Widget>[
                 HomePage(),
                 ProductsPage(),
-                const OrdersPage(),
+                if (!userManager.adminEnabled) ...[const OrdersPage()],
                 if (userManager.adminEnabled) ...[
                   UsersPage(),
                   const AdminOrdersPage()
-                ]
+                ],
               ],
             );
           },

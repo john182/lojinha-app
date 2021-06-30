@@ -1,6 +1,8 @@
 import 'package:alphabet_list_scroll_view/alphabet_list_scroll_view.dart';
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/ui/shared/widgets/menu/menu_widget.dart';
+import 'package:loja_virtual/ui/viewModel/admin_orders_view_model.dart';
+import 'package:loja_virtual/ui/viewModel/page_view_model.dart';
 import 'package:loja_virtual/ui/viewModel/users_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +31,12 @@ class UsersPage extends StatelessWidget {
                     color: Colors.black45,
                   ),
                 ),
+                onTap: () {
+                  context
+                      .read<AdminOrdersViewModel>()
+                      .setUserFilter(viewModel.users[index]);
+                  context.read<PageViewModel>().setPage(4);
+                },
               );
             },
             highlightTextStyle:

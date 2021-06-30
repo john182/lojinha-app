@@ -66,7 +66,7 @@ class AdminOrdersViewModel extends ChangeNotifier {
       output = output.where((o) => o.userId == userFilter?.id).toList();
     }
 
-    return output.where((o) => statusFilter.contains(o.status)).toList();
+    return output;
   }
 
   void _listenToOrders() {

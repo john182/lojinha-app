@@ -14,7 +14,7 @@ class AdminOrdersPage extends StatelessWidget {
     return Scaffold(
       drawer: MenuWidget(),
       appBar: AppBar(
-        title: const Text('Meus Pedidos'),
+        title: const Text('Meus Pedidos 2'),
         centerTitle: true,
       ),
       body: Consumer<AdminOrdersViewModel>(
@@ -33,13 +33,13 @@ class AdminOrdersPage extends StatelessWidget {
                           'Pedidos de ${viewModel.userFilter?.name ?? ""}',
                           style: const TextStyle(
                             fontWeight: FontWeight.w800,
-                            color: Colors.white,
+                            color: Colors.black45,
                           ),
                         ),
                       ),
                       IconButtonWidget(
                         iconData: Icons.close,
-                        color: Colors.white,
+                        color: Colors.black45,
                         onTap: () {
                           viewModel.setUserFilter(null);
                         },

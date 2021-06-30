@@ -31,7 +31,7 @@ class MenuWidget extends StatelessWidget {
                     const MenuItemWidget(
                       iconData: Icons.settings,
                       title: 'Usuários',
-                      page: 3,
+                      page: 2,
                     ),
                     const MenuItemWidget(
                       iconData: Icons.settings,
