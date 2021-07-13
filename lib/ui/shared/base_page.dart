@@ -31,7 +31,7 @@ class _BasePageState extends State<BasePage> {
                 if (!userManager.adminEnabled) ...[const OrdersPage()],
                 if (userManager.adminEnabled) ...[
                   UsersPage(),
-                  const AdminOrdersPage()
+                  AdminOrdersPage()
                 ],
               ],
             );

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/model/order.dart';
+import 'package:loja_virtual/ui/page/admin_orders/widgets/cancel_order_dialog_widget.dart';
+import 'package:loja_virtual/ui/page/admin_orders/widgets/export_address_dialog_widget.dart';
 import 'package:loja_virtual/ui/viewModel/admin_orders_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +20,9 @@ class StatusActionWdiget extends StatelessWidget {
         children: <Widget>[
           TextButton(
             onPressed: () async {
-              await viewModel.cancel(order);
+              showDialog(
+                  context: context,
+                  builder: (_) => CancelOrderDialogWidget(order: order));
             },
             style: TextButton.styleFrom(
               primary: Colors.red,
@@ -34,7 +38,12 @@ class StatusActionWdiget extends StatelessWidget {
             child: const Text('Avançar'),
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (_) =>
+                      ExportAddressDialogWidget(address: order.address!));
+            },
             child: const Text('Endereço'),
           )
         ],

@@ -12,7 +12,7 @@ class AdminOrdersViewModel extends ChangeNotifier {
   final ProductService _productService = locator<ProductService>();
 
   final List<Order> _orders = [];
-  List<Status> statusFilter = [Status.preparing];
+  List<Status> statusFilter = [Status.pending];
   User? userFilter;
   StreamSubscription? _subscription;
 
@@ -66,7 +66,7 @@ class AdminOrdersViewModel extends ChangeNotifier {
       output = output.where((o) => o.userId == userFilter?.id).toList();
     }
 
-    return output;
+    return output.where((o) => statusFilter.contains(o.status)).toList();
   }
 
   void _listenToOrders() {
