@@ -36,7 +36,7 @@ android {
     defaultConfig {
 
         applicationId "br.com.chronos.loja_virtual"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

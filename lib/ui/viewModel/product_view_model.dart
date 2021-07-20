@@ -67,6 +67,11 @@ class ProductViewModel extends ChangeNotifier {
     loading = false;
   }
 
+  void delete(Product product) {
+    _service.update({'deleted': true});
+    notifyListeners();
+  }
+
   Color getColorBorder(BuildContext context, ItemSize itemSize) {
     Color color;
     if (!itemSize.hasStock) {

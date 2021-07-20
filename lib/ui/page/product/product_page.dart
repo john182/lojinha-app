@@ -23,7 +23,7 @@ class ProductPage extends StatelessWidget {
         actions: <Widget>[
           Consumer<LoginViewModel>(
             builder: (_, controlelr, __) {
-              if (controlelr.adminEnabled) {
+              if (controlelr.adminEnabled && !product.deleted) {
                 return IconButton(
                   icon: const Icon(Icons.edit),
                   onPressed: () {
@@ -90,6 +90,17 @@ class ProductPage extends StatelessWidget {
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                 ),
+                if (product.deleted)
+                  const Padding(
+                    padding: EdgeInsets.only(top: 16, bottom: 8),
+                    child: Text(
+                      'Este produto não está mais disponível',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.red),
+                    ),
+                  ),
                 Wrap(
                   spacing: 8,
                   runSpacing: 8,

@@ -70,6 +70,8 @@ class OrderItem {
   num get totalPrice => unitPrice * quantity;
 
   bool get hasStock {
+    if (product != null && product!.deleted) return false;
+
     final size = itemSize;
     if (size == null) return false;
     return size.stock >= quantity;

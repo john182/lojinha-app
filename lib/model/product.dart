@@ -6,12 +6,15 @@ class Product {
   String? id;
   String name;
   String description;
+  bool deleted;
+
   List<String> images;
   List<dynamic>? newImages;
   List<ItemSize> sizes;
 
   Product(
       {this.id,
+      this.deleted = false,
       required this.name,
       required this.description,
       required this.images,
@@ -22,6 +25,7 @@ class Product {
         id: document.id,
         name: document['name'] as String,
         description: document['description'] as String,
+        deleted: document['deleted'] as bool,
         images: List<String>.from(document.get('images') as List<dynamic>),
         sizes: (document.get('sizes') as List<dynamic>)
             .map((s) => ItemSize.fromMap(s as Map<String, dynamic>))
@@ -33,6 +37,7 @@ class Product {
         id: map['id'] as String?,
         name: map['name'] as String,
         description: map['description'] as String,
+        deleted: map['deleted'] as bool,
         images: List<String>.from(map['images'] as List<dynamic>),
         sizes: (map['sizes'] as List<dynamic>)
             .map((s) => ItemSize.fromMap(s as Map<String, dynamic>))
@@ -48,6 +53,7 @@ class Product {
       'name': name,
       'description': description,
       'sizes': exportSizeList(),
+      'deleted': deleted
     };
   }
 
@@ -57,6 +63,7 @@ class Product {
       name: name,
       description: description,
       images: List.from(images),
+      deleted: deleted,
       sizes: sizes.map((size) => size.clone()).toList(),
     );
   }
@@ -72,13 +79,13 @@ class Product {
   }
 
   bool get hasStock {
-    return totalStock > 0;
+    return totalStock > 0 && !deleted;
   }
 
   num get basePrice {
     num lowest = double.infinity;
     for (final size in sizes) {
-      if (size.price < lowest && size.hasStock) {
+      if (size.price < lowest) {
         lowest = size.price;
       }
     }
